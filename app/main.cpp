@@ -6,16 +6,16 @@
 
 
 
+
 int main() 
 { 
     std::map<char, std::vector<char>> graph =   {{'a', {'b', 'c'}}
                                                 ,{'b', {'d'}}
                                                 ,{'c',{'e'}}
                                                 ,{'d',{'f'}}
-                                                ,{'e', {}}
+                                                ,{'e', {'j'}}
                                                 ,{'f',{}}
                                                 };
-    depthFirstPrint(graph, 'a');
+    depthFirstPrintRecursiveNoExcept(graph, 'a');
     return 0; 
 }
-

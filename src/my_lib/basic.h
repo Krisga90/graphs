@@ -23,7 +23,15 @@ private:
   int m_value;
 };
 
+void breadthFirst(const std::map<char, std::vector<char>> &graph,
+                     char start);
 void depthFirstPrint(const std::map<char, std::vector<char>> &graph,
                      char start);
+
+void depthFirstPrintRecursive(const std::map<char, std::vector<char>> &graph,
+                     char start);
+
+void depthFirstPrintRecursiveNoExcept(const std::map<char, std::vector<char>> &graph,
+                     char start) noexcept;
 
 #endif // BASIC_H
