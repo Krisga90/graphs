@@ -34,4 +34,8 @@ void depthFirstPrintRecursive(const std::map<char, std::vector<char>> &graph,
 void depthFirstPrintRecursiveNoExcept(const std::map<char, std::vector<char>> &graph,
                      char start) noexcept;
 
+bool hasPath_breadthFirst( std::map<char, std::vector<char>> graph, char start, char dest);
+bool hasPath_depthFirstPrintRecursive(const std::map<char, std::vector<char>> &graph,
+                              char start, char dest);
+
 #endif // BASIC_H
