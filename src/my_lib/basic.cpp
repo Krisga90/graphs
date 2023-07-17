@@ -177,8 +177,7 @@ bool hasPath(const std::map<char, std::vector<char>> &graph, char start,
   return false;
 }
 
-std::map<char, std::vector<char>>
-edgesToGraph(const std::vector<std::vector<char>> &edges) {
+std::map<char, std::vector<char>> edgesToGraph(const std::vector<std::vector<char>> &edges) {
   std::map<char, std::vector<char>> graph;
   for (auto edge : edges) {
     graph[edge[0]].push_back(edge[1]);
@@ -197,7 +196,7 @@ void printGraph(const std::map<char, std::vector<char>> &graph) {
   }
 }
 
-int how_many_groups(const std::map<int, std::vector<int>> &graph) {
+int howMAnyGroups(const std::map<int, std::vector<int>> &graph) {
   int num_of_groups = 0;
   std::set<int> visited_nodes;
   std::deque<int> keys;
@@ -211,13 +210,13 @@ int how_many_groups(const std::map<int, std::vector<int>> &graph) {
       continue;
     }
     num_of_groups++;
-    walk_all(graph, visited_nodes, key);
+    walkAll(graph, visited_nodes, key);
   }
 
   return num_of_groups;
 }
 
-void walk_all(const std::map<int, std::vector<int>> &graph,
+void walkAll(const std::map<int, std::vector<int>> &graph,
               std::set<int> &visited_nodes, int start_node) {
   if (graph.count(start_node)) {
     if (visited_nodes.count(start_node)) {
@@ -225,7 +224,45 @@ void walk_all(const std::map<int, std::vector<int>> &graph,
     }
     visited_nodes.insert(start_node);
     for (int node : graph.at(start_node)) {
-      walk_all(graph, visited_nodes, node);
+      walkAll(graph, visited_nodes, node);
     }
   }
+}
+
+int largestGroup(const std::map<int, std::vector<int>> &graph) {
+  int largest = 0;
+  std::set<int> visited_nodes;
+  std::deque<int> keys;
+
+  for (auto node : graph) {
+    keys.push_back(node.first);
+  }
+
+  for (auto key : keys) {
+    int temp;
+    if (visited_nodes.count(key)) {
+      continue;
+    }
+    temp = walkAllCount(graph, visited_nodes, key);
+    largest = temp > largest? temp: largest;
+  }
+
+  return largest;
+}
+
+int walkAllCount(const std::map<int, std::vector<int>> &graph,
+              std::set<int> &visited_nodes, int start_node) 
+{
+  int sum = 0;
+  if (graph.count(start_node)) {
+    if (visited_nodes.count(start_node)) {
+      return sum;
+    }
+    sum ++;
+    visited_nodes.insert(start_node);
+    for (int node : graph.at(start_node)) {
+      sum += walkAllCount(graph, visited_nodes, node);
+    }
+  }
+  return sum;
 }

@@ -44,9 +44,14 @@ bool hasPath_throws(std::map<char, std::vector<char>> graph, char start,
 bool hasPath(const std::map<char, std::vector<char>> &graph, char start,
              char dest);
 
-int how_many_groups(const std::map<int, std::vector<int>> &graph);
-void walk_all(const std::map<int, std::vector<int>> &graph,
+int howMAnyGroups(const std::map<int, std::vector<int>> &graph);
+void walkAll(const std::map<int, std::vector<int>> &graph,
               std::set<int> &visited_nodes, int start_node);
+
+int largestGroup(const std::map<int, std::vector<int>> &graph);
+int walkAllCount(const std::map<int, std::vector<int>> &graph,
+              std::set<int> &visited_nodes, int start_node);
+
 
 std::map<char, std::vector<char>>
 edgesToGraph(const std::vector<std::vector<char>> &edges);

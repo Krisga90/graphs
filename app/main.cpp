@@ -13,11 +13,12 @@ void example();
 void example_2();
 void example_3();
 void example_4();
+void example_5();
 
 
 int main() 
 { 
-    example_4();
+    example_5();
     return 0; 
 }
 
@@ -72,14 +73,28 @@ void example_3()
 
 void example_4()
 {
-        std::map<int, std::vector<int>> graph = {{0, {8,1,5}}
-                                                ,{1, {0}}
-                                                ,{5,{0, 8}}
-                                                ,{8,{0, 5}}
-                                                ,{2, {3, 4}}
-                                                ,{3, {2, 4}}
-                                                ,{4, {3, 2}}
-                                                };
+    std::map<int, std::vector<int>> graph = {{0, {8,1,5}}
+                                            ,{1, {0}}
+                                            ,{5,{0, 8}}
+                                            ,{8,{0, 5}}
+                                            ,{2, {3, 4}}
+                                            ,{3, {2, 4}}
+                                            ,{4, {3, 2}}
+                                            };
 
-    std::cout << "How Many groups\n" << how_many_groups(graph) << "\n";
+    std::cout << "How Many groups\n" << howMAnyGroups(graph) << "\n";
+}
+
+void example_5()
+{
+    std::map<int, std::vector<int>> graph = {{0, {8,1,5}}
+                                            ,{1, {0}}
+                                            ,{5,{0, 8}}
+                                            ,{8,{0, 5}}
+                                            ,{2, {3, 4}}
+                                            ,{3, {2, 4}}
+                                            ,{4, {3, 2}}
+                                            };
+
+    std::cout << "How Many groups\n" << largestGroup(graph) << "\n";
 }
