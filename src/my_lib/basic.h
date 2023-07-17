@@ -24,26 +24,32 @@ private:
   int m_value;
 };
 
-void breadthFirst(const std::map<char, std::vector<char>> &graph,
-                     char start);
+void breadthFirst(const std::map<char, std::vector<char>> &graph, char start);
 void depthFirstPrint(const std::map<char, std::vector<char>> &graph,
                      char start);
 
 void depthFirstPrintRecursive(const std::map<char, std::vector<char>> &graph,
-                     char start);
+                              char start);
 
-void depthFirstPrintRecursiveNoExcept(const std::map<char, std::vector<char>> &graph,
-                     char start) noexcept;
+void depthFirstPrintRecursiveNoExcept(
+    const std::map<char, std::vector<char>> &graph, char start) noexcept;
 
-bool hasPath_breadthFirst( std::map<char, std::vector<char>> graph, char start, char dest);
-bool hasPath_depthFirstPrintRecursive(const std::map<char, std::vector<char>> &graph,
-                              char start, char dest);
+bool hasPath_breadthFirst(std::map<char, std::vector<char>> graph, char start,
+                          char dest);
+bool hasPath_depthFirstPrintRecursive(
+    const std::map<char, std::vector<char>> &graph, char start, char dest);
 
-bool hasPath_throws( std::map<char, std::vector<char>> graph, char start, char dest, std::set<char>& already_in);
-bool hasPath(const std::map<char, std::vector<char>> &graph,
-                              char start, char dest);
+bool hasPath_throws(std::map<char, std::vector<char>> graph, char start,
+                    char dest, std::set<char> &already_in);
+bool hasPath(const std::map<char, std::vector<char>> &graph, char start,
+             char dest);
 
-std::map<char,std::vector<char>> edgesToGraph(const std::vector<std::vector<char>>& edges); 
-void printGraph(const std::map<char,std::vector<char>>& graph);
+int how_many_groups(const std::map<int, std::vector<int>> &graph);
+void walk_all(const std::map<int, std::vector<int>> &graph,
+              std::set<int> &visited_nodes, int start_node);
+
+std::map<char, std::vector<char>>
+edgesToGraph(const std::vector<std::vector<char>> &edges);
+void printGraph(const std::map<char, std::vector<char>> &graph);
 
 #endif // BASIC_H

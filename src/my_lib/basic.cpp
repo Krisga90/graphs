@@ -177,26 +177,55 @@ bool hasPath(const std::map<char, std::vector<char>> &graph, char start,
   return false;
 }
 
-std::map<char,std::vector<char>> edgesToGraph(const std::vector<std::vector<char>>& edges)
-{
-    std::map<char,std::vector<char>> graph;
-    for(auto edge: edges)
-    {
-        graph[edge[0]].push_back(edge[1]);
-        graph[edge[1]].push_back(edge[0]);
-    }
-    return std::move(graph);
+std::map<char, std::vector<char>>
+edgesToGraph(const std::vector<std::vector<char>> &edges) {
+  std::map<char, std::vector<char>> graph;
+  for (auto edge : edges) {
+    graph[edge[0]].push_back(edge[1]);
+    graph[edge[1]].push_back(edge[0]);
+  }
+  return std::move(graph);
 }
 
-void printGraph(const std::map<char,std::vector<char>>& graph)
-{
-    for (auto node: graph)
-    {
-        std::cout << "Node: " <<node.first << " Neighbors:  ";
-        for(auto neighbour: node.second)
-        {
-            std::cout << neighbour << ", ";
-        }
-        std::cout << std::endl;
+void printGraph(const std::map<char, std::vector<char>> &graph) {
+  for (auto node : graph) {
+    std::cout << "Node: " << node.first << " Neighbors:  ";
+    for (auto neighbour : node.second) {
+      std::cout << neighbour << ", ";
     }
+    std::cout << std::endl;
+  }
+}
+
+int how_many_groups(const std::map<int, std::vector<int>> &graph) {
+  int num_of_groups = 0;
+  std::set<int> visited_nodes;
+  std::deque<int> keys;
+
+  for (auto node : graph) {
+    keys.push_back(node.first);
+  }
+
+  for (auto key : keys) {
+    if (visited_nodes.count(key)) {
+      continue;
+    }
+    num_of_groups++;
+    walk_all(graph, visited_nodes, key);
+  }
+
+  return num_of_groups;
+}
+
+void walk_all(const std::map<int, std::vector<int>> &graph,
+              std::set<int> &visited_nodes, int start_node) {
+  if (graph.count(start_node)) {
+    if (visited_nodes.count(start_node)) {
+      return;
+    }
+    visited_nodes.insert(start_node);
+    for (int node : graph.at(start_node)) {
+      walk_all(graph, visited_nodes, node);
+    }
+  }
 }

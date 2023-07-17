@@ -12,23 +12,19 @@
 void example();
 void example_2();
 void example_3();
-
-
+void example_4();
 
 
 int main() 
 { 
-    example_3();
-
-
+    example_4();
     return 0; 
 }
 
 
-
 void example()
 {
-    {
+    
     std::map<char, std::vector<char>> graph =   {{'a', {'b', 'c'}}
                                                 ,{'b', {'d'}}
                                                 ,{'c',{'e'}}
@@ -37,7 +33,7 @@ void example()
                                                 ,{'f',{}}
                                                 };
     depthFirstPrintRecursiveNoExcept(graph, 'a');
-    }
+    
 }
 
 void example_2()
@@ -58,13 +54,12 @@ void example_2()
 
 void example_3()
 {
-    std::vector<std::vector<char>> edges = {
-                                            {'i','j'},
-                                            {'j','k'},
-                                            {'k','i'},
-                                            {'m','k'},
-                                            {'k','l'},
-                                            {'o','n'}
+    std::vector<std::vector<char>> edges =  {{'i','j'}
+                                            ,{'j','k'}
+                                            ,{'k','i'}
+                                            ,{'m','k'}
+                                            ,{'k','l'}
+                                            ,{'o','n'}
                                             };
     auto graph = edgesToGraph(edges);
     printGraph(graph);
@@ -73,4 +68,18 @@ void example_3()
     std::cout << answer; 
     answer =  hasPath(graph, 'i', 'o') ? "has path\n" : "no path\n";
     std::cout << answer;
+}
+
+void example_4()
+{
+        std::map<int, std::vector<int>> graph = {{0, {8,1,5}}
+                                                ,{1, {0}}
+                                                ,{5,{0, 8}}
+                                                ,{8,{0, 5}}
+                                                ,{2, {3, 4}}
+                                                ,{3, {2, 4}}
+                                                ,{4, {3, 2}}
+                                                };
+
+    std::cout << "How Many groups\n" << how_many_groups(graph) << "\n";
 }
