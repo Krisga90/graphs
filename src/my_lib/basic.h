@@ -1,7 +1,10 @@
 #ifndef BASIC_H
 #define BASIC_H
+
 #include <iostream>
+#include <map>
 #include <memory>
+#include <vector>
 
 class A {
 public:
@@ -19,5 +22,8 @@ public:
 private:
   int m_value;
 };
+
+void depthFirstPrint(const std::map<char, std::vector<char>> &graph,
+                     char start);
 
 #endif // BASIC_H
