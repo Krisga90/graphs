@@ -1,7 +1,7 @@
-#graphs
+# Graphs implementation
 
 mkdir build
 cd build
 cmake ..
-make 
+make  
 ./app/app
