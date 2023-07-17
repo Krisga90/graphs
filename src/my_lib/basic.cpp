@@ -73,7 +73,6 @@ void depthFirstPrint(const std::map<char, std::vector<char>> &graph,
   std::cout << std::endl;
 }
 
-
 void depthFirstPrintRecursive(const std::map<char, std::vector<char>> &graph,
                               char start) {
   if (graph.count(start)) {
@@ -97,10 +96,9 @@ void depthFirstPrintRecursiveNoExcept(
   }
 }
 
-
-bool hasPath_breadthFirst( std::map<char, std::vector<char>> graph, char start, char dest)
-{
-   std::queue<char> graph_que;
+bool hasPath_breadthFirst(std::map<char, std::vector<char>> graph, char start,
+                          char dest) {
+  std::queue<char> graph_que;
   graph_que.push(start);
   std::vector<char> graph_path_order;
 
@@ -109,8 +107,7 @@ bool hasPath_breadthFirst( std::map<char, std::vector<char>> graph, char start, 
     graph_que.pop();
     // because of at we can change this if to try/catch
     if (graph.count(current_node)) {
-      if (current_node == dest)
-      {
+      if (current_node == dest) {
         return true;
       }
       graph_path_order.push_back(current_node);
@@ -131,16 +128,14 @@ bool hasPath_breadthFirst( std::map<char, std::vector<char>> graph, char start, 
   return false;
 }
 
-bool hasPath_depthFirstPrintRecursive(const std::map<char, std::vector<char>> &graph,
-                              char start, char dest) {
-  if (start == dest)
-  {
+bool hasPath_depthFirstPrintRecursive(
+    const std::map<char, std::vector<char>> &graph, char start, char dest) {
+  if (start == dest) {
     return true;
   }
   if (graph.count(start)) {
     for (char neighbour : graph.at(start)) {
-      if(hasPath_depthFirstPrintRecursive(graph, neighbour, dest))
-      {
+      if (hasPath_depthFirstPrintRecursive(graph, neighbour, dest)) {
         return true;
       }
     }
@@ -150,4 +145,58 @@ bool hasPath_depthFirstPrintRecursive(const std::map<char, std::vector<char>> &g
     throw std::invalid_argument(ss.str());
   }
   return false;
+}
+
+bool hasPath_throws(std::map<char, std::vector<char>> graph, char start,
+                    char dest, std::set<char> &already_in) {
+  if (start == dest) {
+    return true;
+  }
+  if (already_in.count(start)) {
+    return false;
+  }
+  if (graph.count(start)) {
+    already_in.insert(start);
+    for (auto neighbour : graph.at(start)) {
+      if (hasPath_throws(graph, neighbour, dest, already_in)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+bool hasPath(const std::map<char, std::vector<char>> &graph, char start,
+             char dest) {
+  std::set<char> visited;
+  try {
+    return hasPath_throws(graph, start, dest, visited);
+  } catch (const std::exception &e) {
+    std::cerr << e.what();
+  }
+  return false;
+}
+
+std::map<char,std::vector<char>> edgesToGraph(const std::vector<std::vector<char>>& edges)
+{
+    std::map<char,std::vector<char>> graph;
+    for(auto edge: edges)
+    {
+        graph[edge[0]].push_back(edge[1]);
+        graph[edge[1]].push_back(edge[0]);
+    }
+    return std::move(graph);
+}
+
+void printGraph(const std::map<char,std::vector<char>>& graph)
+{
+    for (auto node: graph)
+    {
+        std::cout << "Node: " <<node.first << " Neighbors:  ";
+        for(auto neighbour: node.second)
+        {
+            std::cout << neighbour << ", ";
+        }
+        std::cout << std::endl;
+    }
 }

@@ -4,6 +4,7 @@
 #include <iostream>
 #include <map>
 #include <memory>
+#include <set>
 #include <vector>
 
 class A {
@@ -37,5 +38,12 @@ void depthFirstPrintRecursiveNoExcept(const std::map<char, std::vector<char>> &g
 bool hasPath_breadthFirst( std::map<char, std::vector<char>> graph, char start, char dest);
 bool hasPath_depthFirstPrintRecursive(const std::map<char, std::vector<char>> &graph,
                               char start, char dest);
+
+bool hasPath_throws( std::map<char, std::vector<char>> graph, char start, char dest, std::set<char>& already_in);
+bool hasPath(const std::map<char, std::vector<char>> &graph,
+                              char start, char dest);
+
+std::map<char,std::vector<char>> edgesToGraph(const std::vector<std::vector<char>>& edges); 
+void printGraph(const std::map<char,std::vector<char>>& graph);
 
 #endif // BASIC_H
