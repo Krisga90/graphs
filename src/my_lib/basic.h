@@ -22,6 +22,8 @@ struct Point {
   int _x;
 };
 
+//TODO add docs and tests, rename functions
+
 void breadthFirst(const std::map<char, std::vector<char>> &graph, char start);
 void depthFirstPrint(const std::map<char, std::vector<char>> &graph,
                      char start);
