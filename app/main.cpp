@@ -16,11 +16,12 @@ void example_4();
 void example_5();
 void example_6();
 void example_7();
+void example_8();
 
 
 int main() 
 { 
-    example_7();
+    example_8();
     return 0; 
 }
 
@@ -154,3 +155,27 @@ void example_7()
     std::cout << "counted_islands " << countIslands(graph_draw) <<std::endl;
 }
 
+void example_8()
+{
+    std::vector<std::vector<char>> graph_draw = {{'w', 'l', 'w', 'w', 'w'}
+                                                ,{'w', 'l', 'w', 'w', 'w'}
+                                                ,{'w', 'w', 'w', 'l', 'w'}
+                                                ,{'w', 'w', 'l', 'l', 'w'}
+                                                ,{'l', 'w', 'w', 'l', 'l'}
+                                                ,{'l', 'l', 'w', 'w', 'w'}
+                                                };
+    std::cout << "smallest island size " << smallestIsland(graph_draw) <<std::endl;
+
+    graph_draw = {{'w', 'l', 'w', 'l', 'w'}};
+    std::cout << "smallest island size " << smallestIsland(graph_draw) <<std::endl;
+
+    graph_draw = {{'w'}};
+    std::cout << "smallest island size " << smallestIsland(graph_draw) <<std::endl;
+
+    graph_draw = {{'l'}};
+    std::cout << "smallest island size " << smallestIsland(graph_draw) <<std::endl;
+
+    graph_draw =    {{'l', 'l'}
+                    ,{'l', 'l'}};
+    std::cout << "smallest island size " << smallestIsland(graph_draw) <<std::endl;
+}

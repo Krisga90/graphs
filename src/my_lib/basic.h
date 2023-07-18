@@ -57,7 +57,13 @@ int pathLength(std::map<char, std::vector<char>> graph, std::set<char> visited,
 
 int countIslands(const std::vector<std::vector<char>> &graph_draw);
 bool newIslands(const std::vector<std::vector<char>> &graph_draw,
-                 std::set<Point> &visited, Point &start, const Point &size);
+                std::set<Point> &visited, Point &start,
+                const Point &graph_size);
+
+int smallestIsland(const std::vector<std::vector<char>> &graph_draw);
+int islandSize_graphic(const std::vector<std::vector<char>> &graph_draw,
+                       std::set<Point> &visited, Point &start,
+                       const Point &graph_size);
 
 std::map<char, std::vector<char>>
 edgesToGraph(const std::vector<std::vector<char>> &edges);

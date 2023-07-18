@@ -309,7 +309,8 @@ int pathLength(std::map<char, std::vector<char>> graph, std::set<char> visited,
 }
 
 bool newIslands(const std::vector<std::vector<char>> &graph_draw,
-                 std::set<Point> &visited, Point &start, const Point &size) {
+                std::set<Point> &visited, Point &start,
+                const Point &graph_size) {
   if (graph_draw[start._y][start._x] == 'w') {
     return false;
   }
@@ -320,22 +321,22 @@ bool newIslands(const std::vector<std::vector<char>> &graph_draw,
   visited.insert(start);
   if (start._x > 0) {
     start._x -= 1;
-    newIslands(graph_draw, visited, start, size);
+    newIslands(graph_draw, visited, start, graph_size);
     start._x += 1;
   }
-  if (start._x + 1 < size._x) {
+  if (start._x + 1 < graph_size._x) {
     start._x += 1;
-    newIslands(graph_draw, visited, start, size);
+    newIslands(graph_draw, visited, start, graph_size);
     start._x -= 1;
   }
   if (start._y > 0) {
     start._y -= 1;
-    newIslands(graph_draw, visited, start, size);
+    newIslands(graph_draw, visited, start, graph_size);
     start._y += 1;
   }
-  if (start._y + 1 < size._y) {
+  if (start._y + 1 < graph_size._y) {
     start._y += 1;
-    newIslands(graph_draw, visited, start, size);
+    newIslands(graph_draw, visited, start, graph_size);
     start._y -= 1;
   }
 
@@ -344,15 +345,74 @@ bool newIslands(const std::vector<std::vector<char>> &graph_draw,
 
 int countIslands(const std::vector<std::vector<char>> &graph_draw) {
   std::set<Point> visited;
-  const Point size(graph_draw[0].size(), graph_draw.size());
+  const Point graph_size(graph_draw[0].size(), graph_draw.size());
   int sum = 0;
   auto temp = Point(0, 0);
-  for (int y = 0; y < size._y; y++) {
+  for (int y = 0; y < graph_size._y; y++) {
     temp._y = y;
-    for (int x = 0; x < size._x; x++) {
+    for (int x = 0; x < graph_size._x; x++) {
       temp._x = x;
-      sum += newIslands(graph_draw, visited, temp, size);
+      sum += newIslands(graph_draw, visited, temp, graph_size);
     }
   }
   return sum;
+}
+
+int smallestIsland(const std::vector<std::vector<char>> &graph_draw) {
+  std::set<Point> visited;
+  const Point graph_size(graph_draw[0].size(), graph_draw.size());
+  int smallest = 0;
+  auto temp = Point(0, 0);
+  for (int y = 0; y < graph_size._y; y++) {
+    temp._y = y;
+    for (int x = 0; x < graph_size._x; x++) {
+      temp._x = x;
+      int size = islandSize_graphic(graph_draw, visited, temp, graph_size);
+
+      // no point there is no smaller island than 1;
+      if (size == 1) {
+        return 1;
+      }
+
+      if (smallest > size && size != 0 || smallest == 0) {
+        smallest = size;
+      }
+    }
+  }
+  return smallest;
+}
+
+int islandSize_graphic(const std::vector<std::vector<char>> &graph_draw,
+                       std::set<Point> &visited, Point &start,
+                       const Point &graph_size) {
+  if (graph_draw[start._y][start._x] == 'w') {
+    return 0;
+  }
+  if (visited.count(start)) {
+    return 0;
+  }
+  int size = 1;
+  visited.insert(start);
+  if (start._x > 0) {
+    start._x -= 1;
+    size += islandSize_graphic(graph_draw, visited, start, graph_size);
+    start._x += 1;
+  }
+  if (start._x + 1 < graph_size._x) {
+    start._x += 1;
+    size += islandSize_graphic(graph_draw, visited, start, graph_size);
+    start._x -= 1;
+  }
+  if (start._y > 0) {
+    start._y -= 1;
+    size += islandSize_graphic(graph_draw, visited, start, graph_size);
+    start._y += 1;
+  }
+  if (start._y + 1 < graph_size._y) {
+    start._y += 1;
+    size += islandSize_graphic(graph_draw, visited, start, graph_size);
+    start._y -= 1;
+  }
+
+  return size;
 }
