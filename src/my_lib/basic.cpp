@@ -177,7 +177,8 @@ bool hasPath(const std::map<char, std::vector<char>> &graph, char start,
   return false;
 }
 
-std::map<char, std::vector<char>> edgesToGraph(const std::vector<std::vector<char>> &edges) {
+std::map<char, std::vector<char>>
+edgesToGraph(const std::vector<std::vector<char>> &edges) {
   std::map<char, std::vector<char>> graph;
   for (auto edge : edges) {
     graph[edge[0]].push_back(edge[1]);
@@ -217,7 +218,7 @@ int howMAnyGroups(const std::map<int, std::vector<int>> &graph) {
 }
 
 void walkAll(const std::map<int, std::vector<int>> &graph,
-              std::set<int> &visited_nodes, int start_node) {
+             std::set<int> &visited_nodes, int start_node) {
   if (graph.count(start_node)) {
     if (visited_nodes.count(start_node)) {
       return;
@@ -244,24 +245,113 @@ int largestGroup(const std::map<int, std::vector<int>> &graph) {
       continue;
     }
     temp = walkAllCount(graph, visited_nodes, key);
-    largest = temp > largest? temp: largest;
+    largest = temp > largest ? temp : largest;
   }
 
   return largest;
 }
 
 int walkAllCount(const std::map<int, std::vector<int>> &graph,
-              std::set<int> &visited_nodes, int start_node) 
-{
+                 std::set<int> &visited_nodes, int start_node) {
   int sum = 0;
   if (graph.count(start_node)) {
     if (visited_nodes.count(start_node)) {
       return sum;
     }
-    sum ++;
+    sum++;
     visited_nodes.insert(start_node);
     for (int node : graph.at(start_node)) {
       sum += walkAllCount(graph, visited_nodes, node);
+    }
+  }
+  return sum;
+}
+
+int shortestPath(const std::map<char, std::vector<char>> &graph, char start,
+                 char dest) {
+  std::set<char> visited;
+  return pathLength(graph, visited, start, dest);
+}
+
+int pathLength(std::map<char, std::vector<char>> graph, std::set<char> visited,
+               char start, char dest) {
+  std::queue<std::tuple<char, int>> graph_que;
+  graph_que.push(std::make_tuple(start, 0));
+  int dist = 0;
+
+  while (true) {
+    if (graph_que.empty()) {
+      break;
+    }
+    std::tuple<char, int> current_node = graph_que.front();
+    graph_que.pop();
+    if (graph.count(std::get<0>(current_node))) {
+      if (visited.count(std::get<0>(current_node))) {
+        continue;
+      }
+      visited.insert(std::get<0>(current_node));
+      if (std::get<0>(current_node) == dest) {
+        return std::get<1>(current_node);
+      }
+
+      const std::vector<char> &neighbors = graph.at(std::get<0>(current_node));
+
+      for (char neighbour : neighbors) {
+        graph_que.push(
+            std::make_tuple(neighbour, std::get<1>(current_node) + 1));
+      }
+    } else {
+      std::cerr << "No \"" << std::get<0>(current_node) << "\" node in graph\n";
+      break;
+    }
+  }
+  return -1;
+}
+
+bool newIslands(const std::vector<std::vector<char>> &graph_draw,
+                 std::set<Point> &visited, Point &start, const Point &size) {
+  if (graph_draw[start._y][start._x] == 'w') {
+    return false;
+  }
+  if (visited.count(start)) {
+    return false;
+  }
+
+  visited.insert(start);
+  if (start._x > 0) {
+    start._x -= 1;
+    newIslands(graph_draw, visited, start, size);
+    start._x += 1;
+  }
+  if (start._x + 1 < size._x) {
+    start._x += 1;
+    newIslands(graph_draw, visited, start, size);
+    start._x -= 1;
+  }
+  if (start._y > 0) {
+    start._y -= 1;
+    newIslands(graph_draw, visited, start, size);
+    start._y += 1;
+  }
+  if (start._y + 1 < size._y) {
+    start._y += 1;
+    newIslands(graph_draw, visited, start, size);
+    start._y -= 1;
+  }
+
+  return true;
+}
+
+int countIslands(const std::vector<std::vector<char>> &graph_draw) {
+  std::set<Point> visited;
+  const Point size(graph_draw[0].size(), graph_draw.size());
+  int sum = 0;
+  auto temp = Point(0, 0);
+  for (int y = 0; y < size._y; y++) {
+    temp._y = y;
+    for (int x = 0; x < size._x; x++) {
+      temp._x = x;
+      sum += newIslands(graph_draw, visited, temp, size);
     }
   }
   return sum;
